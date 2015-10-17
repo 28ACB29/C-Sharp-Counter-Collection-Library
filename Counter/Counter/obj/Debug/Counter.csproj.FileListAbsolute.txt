@@ -1,0 +1,5 @@
+c:\users\arthur c. baroi\documents\visual studio 2013\Projects\Counter\Counter\bin\Debug\Counter.dll
+c:\users\arthur c. baroi\documents\visual studio 2013\Projects\Counter\Counter\bin\Debug\Counter.pdb
+c:\users\arthur c. baroi\documents\visual studio 2013\Projects\Counter\Counter\obj\Debug\Counter.csprojResolveAssemblyReference.cache
+c:\users\arthur c. baroi\documents\visual studio 2013\Projects\Counter\Counter\obj\Debug\Counter.dll
+c:\users\arthur c. baroi\documents\visual studio 2013\Projects\Counter\Counter\obj\Debug\Counter.pdb
