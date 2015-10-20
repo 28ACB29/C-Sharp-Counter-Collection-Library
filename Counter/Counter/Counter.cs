@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Counter
 {
-	public class Counter<T> : IDictionary<T, uint>
+	public class Counter<T> : Dictionary<T, uint>
 	{
 		private Dictionary<T, uint> counts;
 
@@ -19,6 +19,10 @@ namespace Counter
 			this.counts = new Dictionary<T, uint>();
 		}
 
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="enumerable"></param>
 		public Counter(IEnumerable<T> enumerable)
 		{
 			this.counts = new Dictionary<T, uint>();
@@ -49,85 +53,42 @@ namespace Counter
 		}
 		#endregion
 
-		#region Interface Methods
+		#region Inherited Methods
 		/// <summary>
 		/// 
 		/// </summary>
-		/// <param name="key"></param>
-		/// <param name="value"></param>
-		public void Add(T key, uint value)
-		{
-			this.counts.Add(key, value);
-		}
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="key"></param>
+		/// <param name="obj"></param>
 		/// <returns></returns>
-		public bool ContainsKey(T key)
+		public override bool Equals(object obj)
 		{
-			return this.counts.ContainsKey(key);
-		}
-
-		/// <summary>
-		/// 
-		/// </summary>
-		ICollection<T> Keys
-		{
-			get
+			bool result;
+			if (obj is Counter<T>)
 			{
-				return this.counts.Keys;
+				result = this == (Counter<T>)obj;
 			}
+			else
+			{
+				result = false;
+			}
+			return result;
 		}
 
 		/// <summary>
 		/// 
 		/// </summary>
-		/// <param name="key"></param>
 		/// <returns></returns>
-		public bool Remove(T key)
+		public override int GetHashCode()
 		{
-			return this.counts.Remove(key);
+			return this.counts.GetHashCode();
 		}
 
 		/// <summary>
 		/// 
 		/// </summary>
-		/// <param name="key"></param>
-		/// <param name="value"></param>
 		/// <returns></returns>
-		public bool TryGetValue(T key, out uint value)
+		public override string ToString()
 		{
-			throw new NotImplementedException();
-		}
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public ICollection<uint> Values
-		{
-			get
-			{
-				return this.counts.Values;
-			}
-		}
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <param name="key"></param>
-		/// <returns></returns>
-		public uint this[T key]
-		{
-			get
-			{
-				return this.counts[key];
-			}
-			set
-			{
-				this.counts[key] = value;
-			}
+			return this.counts.ToString();
 		}
 
 		/// <summary>
@@ -137,14 +98,6 @@ namespace Counter
 		public void Add(KeyValuePair<T, uint> item)
 		{
 			this.counts.Add(item.Key, item.Value);
-		}
-
-		/// <summary>
-		/// 
-		/// </summary>
-		public void Clear()
-		{
-			this.counts.Clear();
 		}
 
 		/// <summary>
@@ -176,17 +129,6 @@ namespace Counter
 		/// <summary>
 		/// 
 		/// </summary>
-		public int Count
-		{
-			get
-			{
-				return this.counts.Count;
-			}
-		}
-
-		/// <summary>
-		/// 
-		/// </summary>
 		public bool IsReadOnly
 		{
 			get
@@ -203,24 +145,6 @@ namespace Counter
 		public bool Remove(KeyValuePair<T, uint> item)
 		{
 			return this.counts.Remove(item.Key);
-		}
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <returns></returns>
-		public IEnumerator<KeyValuePair<T, uint>> System.Collections.Generic.IEnumerable<KeyValuePair<T, uint>>.GetEnumerator()
-		{
-			return this.counts.GetEnumerator();
-		}
-
-		/// <summary>
-		/// 
-		/// </summary>
-		/// <returns></returns>
-		public System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-		{
-			throw new NotImplementedException();
 		}
 		#endregion
 
@@ -376,17 +300,13 @@ namespace Counter
 		{
 			List<T> elements;
 			uint size;
-			size = 0;
-			foreach (var value in this.counts.Values)
-			{
-				size += value;
-			}
+			size = (uint)this.counts.Values.Sum(x => x);
 			elements = new List<T>((int)size);
 			foreach (KeyValuePair<T, uint> item in this.counts)
 			{
 				for (int i = 0; i < item.Value; i++)
 				{
-					elements.Add(item.Key); 
+					elements.Add(item.Key);
 				}
 			}
 			return elements;
