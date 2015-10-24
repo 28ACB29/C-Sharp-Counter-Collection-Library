@@ -8,7 +8,7 @@ namespace Counter
 {
 	public class Counter<T> : Dictionary<T, uint>
 	{
-		private Dictionary<T, uint> counts;
+		protected Dictionary<T, uint> counts;
 
 		#region Constructors
 		/// <summary>
@@ -94,7 +94,7 @@ namespace Counter
 		/// <summary>
 		/// 
 		/// </summary>
-		/// <param name="item"></param>
+		/// <param name="count"></param>
 		public void Add(KeyValuePair<T, uint> item)
 		{
 			this.counts.Add(item.Key, item.Value);
@@ -103,7 +103,7 @@ namespace Counter
 		/// <summary>
 		/// 
 		/// </summary>
-		/// <param name="item"></param>
+		/// <param name="count"></param>
 		/// <returns></returns>
 		public bool Contains(KeyValuePair<T, uint> item)
 		{
@@ -140,7 +140,7 @@ namespace Counter
 		/// <summary>
 		/// 
 		/// </summary>
-		/// <param name="item"></param>
+		/// <param name="count"></param>
 		/// <returns></returns>
 		public bool Remove(KeyValuePair<T, uint> item)
 		{
@@ -278,18 +278,18 @@ namespace Counter
 		/// <returns></returns>
 		public List<KeyValuePair<T, uint>> sortByCount(bool ascending = true)
 		{
-			List<KeyValuePair<T, uint>> SortedItems;
-			List<KeyValuePair<T, uint>> items;
-			items = this.counts.ToList();
+			List<KeyValuePair<T, uint>> SortedCounts;
+			List<KeyValuePair<T, uint>> counts;
+			counts = this.counts.ToList();
 			if (ascending)
 			{
-				SortedItems = (from item in items orderby item.Value ascending select item).ToList();
+				SortedCounts = (from count in counts orderby count.Value ascending select count).ToList();
 			}
 			else
 			{
-				SortedItems = (from item in items orderby item.Value descending select item).ToList();
+				SortedCounts = (from count in counts orderby count.Value descending select count).ToList();
 			}
-			return SortedItems;
+			return SortedCounts;
 		}
 
 		/// <summary>
